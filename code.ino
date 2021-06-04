@@ -1,6 +1,6 @@
 /*********
  Base code by Rui Santos
- -- Modified to be used as fan power management for customized asic rig --
+ -- Modified to be used as fan power management for customized asic rigs --
 *********/
 
 // Import required libraries
@@ -35,8 +35,8 @@ unsigned long lastTime = 0;
 unsigned long timerDelay = 30000;
 
 // Replace with your network credentials
-const char* ssid = "WIFI_SSID";
-const char* password = "WIDI_PASSWORD";
+const char* ssid = "sinister";
+const char* password = "10801080";
 int R4 = 14;
 int R3 = 12;
 int R2 = 13;
@@ -112,6 +112,7 @@ const char index_html[] PROGMEM = R"rawliteral(
   </p>
   <p> 
     <span class="ds-labels">Select Speed</span>
+  <a href="/0">0</a>
   <a href="/1">1</a>
   <a href="/2">2</a>
   <a href="/3">3</a>
@@ -194,6 +195,13 @@ void setup(){
   });
   server.on("/temperaturef", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/plain", temperatureF.c_str());
+  });
+  server.on("/0", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send_P(200, "text/plain", "!!TURNED OFF!!");
+    digitalWrite(R4, HIGH);
+    digitalWrite(R3, HIGH);
+    digitalWrite(R2, HIGH);
+    digitalWrite(R1, HIGH);
   });
   server.on("/1", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/plain", "OK");
