@@ -1,6 +1,6 @@
 /*********
  Base code by Rui Santos
- -- Modified to be used as fan power management for customized asic rigs --
+ -- Modified to be used as fan power management for customized ASIC rigs --
 *********/
 
 // Import required libraries
@@ -17,7 +17,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// Data wire is connected to GPIO 2
+// Temp sensor is connected to GPIO 2
 #define ONE_WIRE_BUS 2
 
 // Setup a oneWire instance to communicate with any OneWire devices
@@ -35,8 +35,8 @@ unsigned long lastTime = 0;
 unsigned long timerDelay = 30000;
 
 // Replace with your network credentials
-const char* ssid = "sinister";
-const char* password = "10801080";
+const char* ssid = "WIFI_SSID";
+const char* password = "WIFI_PASSWORD";
 int R4 = 14;
 int R3 = 12;
 int R2 = 13;
