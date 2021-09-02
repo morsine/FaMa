@@ -1,5 +1,5 @@
 /*********
- Base code by Rui Santos
+ Base code by Rui Santos https://RandomNerdTutorials.com  
  -- Modified to be used as fan power management for customized ASIC rigs --
 *********/
 
@@ -17,7 +17,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// Temp sensor is connected to GPIO 2
+// Data wire is connected to GPIO 2
 #define ONE_WIRE_BUS 2
 
 // Setup a oneWire instance to communicate with any OneWire devices
@@ -36,7 +36,7 @@ unsigned long timerDelay = 30000;
 
 // Replace with your network credentials
 const char* ssid = "WIFI_SSID";
-const char* password = "WIFI_PASSWORD";
+const char* password = "WIFI_PASSWD";
 int R4 = 14;
 int R3 = 12;
 int R2 = 13;
@@ -97,7 +97,7 @@ const char index_html[] PROGMEM = R"rawliteral(
   </style>
 </head>
 <body>
-  <h2>ESP DS18B20 Server</h2>
+  <h2>ESP Centrifugal Fan Controller</h2>
   <p>
     <i class="fas fa-thermometer-half" style="color:#059e8a;"></i> 
     <span class="ds-labels">Temperature Celsius</span> 
