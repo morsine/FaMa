@@ -1,12 +1,21 @@
 # Replace the values below
+# ASIC Miner SSH username
 PASSWORD=admin
+# ASIC Miner SSH password
 USERNAME=admin
+# ASIC Miner IP Address
 IP_ADDRESS=192.168.1.100
+# Fan controller IP address
 FAN_CONTROLLER_IP=192.168.1.200
+# Trigger temp for the hashboards
 H=76
+# Trigger temp for the PSU
 P=65
+# Fan speed to set
 F=4
+# Time between rechecking the system
 WAIT_TIME=15
+# ----------------------------------
 echo "Configuration"
 echo "Hashboard temp trigger = $H"
 echo "PSU temp trigger = $P"
@@ -14,7 +23,7 @@ echo "Fan speed to set = $F"
 echo "Sleep time set to $WAIT_TIME"
 echo "ASIC Miner IP address = $IP_ADDRESS"
 echo "Fan controller IP address = $FAN_CONTROLLER_IP"
-# end of editable variables
+# --- end of editable variables ---
 for (( ; ; ))
 do
 sshpass -p $PASSWORD ssh -t $USERNAME@$IP_ADDRESS 'sensors -u' >> /tmp/temp
