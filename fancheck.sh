@@ -1,29 +1,51 @@
-# Replace the values below
-# ASIC Miner SSH username
+# THIS IS A WIP PROJECT
+# you need to replace some text with values such as IP addresses, usernames and passwords.
 PASSWORD=admin
-# ASIC Miner SSH password
 USERNAME=admin
-# ASIC Miner IP Address
 IP_ADDRESS=192.168.1.100
-# Fan controller IP address
-FAN_CONTROLLER_IP=192.168.1.200
-# Trigger temp for the hashboards
+FAN_CONTROLLER_IP=192.168.1.101
 H=76
-# Trigger temp for the PSU
+C=58
 P=65
-# Fan speed to set
-F=4
-# Time between rechecking the system
-WAIT_TIME=15
-# ----------------------------------
-echo "Configuration"
-echo "Hashboard temp trigger = $H"
+F=3
+LF=2
+WAIT_TIME=30
+# 1 for ON and 0 for OFF
+# NOT READY FOR USE
+ENABLE_WEB_MODE=1
+ENABLE_LOG_TO_FILE=0
+#### END OF EDITABLE SECTION ####
+echo "──────▄▀▄─────▄▀▄"
+echo "─────▄█░░▀▀▀▀▀░░█▄"
+echo "─▄▄──█░░░░░░░░░░░█──▄▄"
+echo "█▄▄█─█░░▀░░┬░░▀░░█─█▄▄█"
+echo "================================================="
+echo "=            + +  Configuration  + +            ="
+echo "================================================="
+echo "Hashboard temp trigger (HOT) = $H"
+echo "Hashboard temp trigger (COLD) = $C"
 echo "PSU temp trigger = $P"
-echo "Fan speed to set = $F"
-echo "Sleep time set to $WAIT_TIME"
+echo "Fan speed (HIGH) = $F"
+echo "Fan speed (LOW) = $LF"
+echo "Sleep time set to $WAIT_TIME seconds"
 echo "ASIC Miner IP address = $IP_ADDRESS"
 echo "Fan controller IP address = $FAN_CONTROLLER_IP"
-# --- end of editable variables ---
+if [ $ENABLE_LOG_TO_FILE -eq 1 ]
+then
+echo "Log to file is ENABLED"
+else
+echo "Log to file is DISABLED"
+fi
+if [ $ENABLE_WEB_MODE -eq 1 ]
+then
+echo "Web monitor interface is ENABLED"
+else
+echo "Web monitor interface is DISABLED"
+fi
+echo "================================================="
+echo "=               Starting the bot                ="
+echo "================================================="
+sleep 5
 for (( ; ; ))
 do
 sshpass -p $PASSWORD ssh -t $USERNAME@$IP_ADDRESS 'sensors -u' >> /tmp/temp
@@ -43,9 +65,17 @@ if [ $T1 -ge $H ] || [ $T2 -ge $H ] || [ $T3 -ge $H ]
         echo "temp is greater than $H"
         echo "turning fan speed to $F"
         wget -qO- http://$FAN_CONTROLLER_IP/$F &> /dev/null
+    elif [ $T1 -le $C ] && [ $T2 -le $C ] && [ $T3 -le $C ]
+    then
+	echo "System is running cold (Lower then $C)"
+	echo "Turning down the fan speed to $LF"
+	wget -qO- http://$FAN_CONTROLLER_IP/$LF &> /dev/null
+	echo "Hashboard 1: $T1"
+        echo "Hashboard 2: $T2"
+        echo "Hashboard 3: $T3"
     else
 	echo "Hashboard Temp is OK"
-        echo "Hashboard 1: $T1"
+	echo "Hashboard 1: $T1"
 	echo "Hashboard 2: $T2"
 	echo "Hashboard 3: $T3"
 fi
@@ -65,10 +95,12 @@ if [ $T4 -ge $P ]
         echo "PSU Temp is OK"
 	echo "PSU Temp: $T4"
 fi
-echo cleaning up...
+
+# clean up
 sync; echo 3 > /proc/sys/vm/drop_caches 
 rm /tmp/tem*
 rm /tmp/psu
+# end of clean up
 echo "waiting for $WAIT_TIME seconds"
 sleep $WAIT_TIME
 done
