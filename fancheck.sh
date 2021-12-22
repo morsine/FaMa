@@ -1,15 +1,19 @@
 # THIS IS A WIP PROJECT
 # you need to replace some text with values such as IP addresses, usernames and passwords.
+# change the fan speed depending on your setup and environment.
+# best temperature range for m3x, m3v1 and m3v2 is 79 to 82 degrees,
+# highest temperature set to 81 to allow the program to increase the fan speed in time and avoid overheating.
+
 PASSWORD=admin
 USERNAME=admin
 IP_ADDRESS=192.168.1.100
 FAN_CONTROLLER_IP=192.168.1.101
-H=76
-C=58
+H=81
+C=79
 P=65
-F=3
-LF=2
-WAIT_TIME=30
+F=2
+LF=1
+WAIT_TIME=10
 # 1 for ON and 0 for OFF
 # NOT READY FOR USE
 ENABLE_WEB_MODE=1
@@ -18,7 +22,7 @@ ENABLE_LOG_TO_FILE=0
 echo "──────▄▀▄─────▄▀▄"
 echo "─────▄█░░▀▀▀▀▀░░█▄"
 echo "─▄▄──█░░░░░░░░░░░█──▄▄"
-echo "█▄▄█─█░░▀░░┬░░▀░░█─█▄▄█"
+echo "█▄▄█─█░░▀░░┬░░▀░░█─█▄▄█ Nya~"
 echo "================================================="
 echo "=            + +  Configuration  + +            ="
 echo "================================================="
